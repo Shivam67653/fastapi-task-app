@@ -50,6 +50,11 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 # --- ENDPOINTS ---
 
+# Add this near your other endpoints
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Task Management API! Go to /docs to test it."}
+
 @app.post("/tasks", response_model=TaskResponse)
 async def create_task(task: TaskCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     # Notice we use models.TaskModel now
